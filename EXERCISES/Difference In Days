@@ -37,16 +37,24 @@ def daysBetweenMonths(month1,month2)
     
 
 def daysBetweenDates(year1, month1, day1, year2, month2, day2):
+    #These differences are declared due to the possibility of being referenced to multiple times:
     difMonths=month2-month1
     difYears=year2-year1
     difDays=day2-day1
     dif1=dayofMonths[month1-1]-day1+day2
+    
+    #First check: equal years.
     if difYears==0:
+       #Second check: equal months.
         if difMonths==0:
+            #Third "check": equal days, but that won't be taken into consideration.
             return difDays
         else:
             return daysBetweenMonths(month1,month2) + dif1
     else:
+    
+        #This code is wrong right now. I must find a way to count how many days are left in a year since the birth date
+        #and how many days have passed since Jan 1 of the second date to its current day.
         numberYears=0
         if difYears>1:
             while i!=difYears-1:
