@@ -1,0 +1,85 @@
+# By Websten from forums
+#
+# Given your birthday and the current date, calculate your age in days. 
+# Account for leap days. 
+#
+# Assume that the birthday and current date are correct dates (and no 
+# time travel). 
+#
+
+#########################################################################
+
+#Here I define the LeapYear procedure:
+
+def isLeapYear(year):
+    if year%4!=0:
+        return False
+    else:
+        if year%100!=0:
+            return True
+        else:
+            if year%400!=0:
+                return False
+            else:
+                return True
+                
+#I create a list of the number of days in each month for an easier call back.
+daysOfMonths = [ 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+
+#This procedure returns the number of days between the months that separate two dates (not inclusive).
+def daysBetweenMonths(month1,month2)
+    i=0
+    difMonths=month2-month1
+    while i!=difMonths:
+        daysBetween=daysBetween+daysOfMonths[month1+i+1]
+        i=i+1
+    return daysBetween
+    
+
+def daysBetweenDates(year1, month1, day1, year2, month2, day2):
+    difMonths=month2-month1
+    difYears=year2-year1
+    difDays=day2-day1
+    dif1=dayofMonths[month1-1]-day1+day2
+    if difYears==0:
+        if difMonths==0:
+            return difDays
+        else:
+            return daysBetweenMonths(month1,month2) + dif1
+    else:
+        numberYears=0
+        if difYears>1:
+            while i!=difYears-1:
+                if isLeapYear(year1+i)==True:
+                    numberYears=numberYears+366
+                else:
+                    numberYears=numberYears+365
+                i=i+1
+            if difMonths==0:
+                return difDays + numberYears
+            else:
+                return daysBetweenMonths(month1,month2) + dif1 + numberYears
+        else:
+            if isLeapYear(year1)==True
+            
+        
+                    
+                    
+
+
+# Test routine
+
+def test():
+    test_cases = [((2012,1,1,2012,2,28), 58), 
+                  ((2012,1,1,2012,3,1), 60),
+                  ((2011,6,30,2012,6,30), 366),
+                  ((2011,1,1,2012,8,8), 585 ),
+                  ((1900,1,1,1999,12,31), 36523)]
+    for (args, answer) in test_cases:
+        result = daysBetweenDates(*args)
+        if result != answer:
+            print "Test with data:", args, "failed"
+        else:
+            print "Test case passed!"
+
+test()
