@@ -7,6 +7,16 @@
 # time travel). 
 #
 
+
+# By Websten from forums
+#
+# Given your birthday and the current date, calculate your age in days. 
+# Account for leap days. 
+#
+# Assume that the birthday and current date are correct dates (and no 
+# time travel). 
+#
+
 #########################################################################
 
 #Here I define the LeapYear procedure:
@@ -24,24 +34,75 @@ def isLeapYear(year):
                 return True
                 
 #I create a list of the number of days in each month for an easier call back.
-daysOfMonths = [ 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+daysOfMonths = [ 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 
 #This procedure returns the number of days between the months that separate two dates (not inclusive).
-def daysBetweenMonths(month1,month2)
+def betweenMonths(month1,month2):
     i=0
     difMonths=month2-month1
-    while i!=difMonths:
-        daysBetween=daysBetween+daysOfMonths[month1+i+1]
-        i=i+1
-    return daysBetween
+    daysBetween=0
+    if difMonths==1:
+        return daysBetween
+    else:
+        while i!=difMonths-1:
+            daysBetween=daysBetween+daysOfMonths[month1+i+1]
+            i=i+1
+        return daysBetween
     
+#This procedure returns the number of days left in a year.
+def untilEndOfYear(year,month,day):
+    if isLeapYear(year)==True:
+        daysOfMonths[2]=29
+    else:
+        daysOfMonths[2]=28
+    daysUntilEndMonth=daysOfMonths[month]-day+1
+    return daysUntilEndMonth+betweenMonths(month,12)+daysOfMonths[12]
+
+###############################################################################
+
+#For the next two, apparently every time I do the check for leap year and change the 2nd month accordingly, I'm changing the
+#index from the list itself. I thought it was a local change that only applied when the procedure was called. This was the greatest
+#impasse of this exercise, haha.
+
+#Number of days from beginning of specified year to date (inclusive).
+def sinceBeginningOfYear(year,month,day):
+    if month==1:
+        return day
+    else:
+        if isLeapYear(year)==True:
+            daysOfMonths[2]=29
+        else:
+            daysOfMonths[2]=28
+        return daysOfMonths[1]+betweenMonths(1,month)+day-1
+
+#Number of days until end of specified year (not inclusive):
+def betweenYears(year1,year2):
+    difYears=year2-year1-1
+    daysBetween=0
+    i=0
+    if difYears==-1:
+        return daysBetween
+    else:
+        while i!=difYears:
+            if isLeapYear(year1+i+1)==True:
+                daysBetween=daysBetween+366
+            else:
+                daysBetween=daysBetween+365
+            i=i+1
+        return daysBetween
+    
+
+###############################################################################################################
+
+#Here we go, this is the main procedure to calculate the number of days between two dates taking into account
+#leap years.
 
 def daysBetweenDates(year1, month1, day1, year2, month2, day2):
     #These differences are declared due to the possibility of being referenced to multiple times:
     difMonths=month2-month1
     difYears=year2-year1
     difDays=day2-day1
-    dif1=dayofMonths[month1-1]-day1+day2
+    dif1=daysOfMonths[month1]-day1+day2
     
     #First check: equal years.
     if difYears==0:
@@ -50,29 +111,11 @@ def daysBetweenDates(year1, month1, day1, year2, month2, day2):
             #Third "check": equal days, but that won't be taken into consideration.
             return difDays
         else:
-            return daysBetweenMonths(month1,month2) + dif1
+            if isLeapYear(year1)==True:
+                daysOfMonths[2]=29
+                return betweenMonths(month1,month2) + dif1
     else:
-    
-        #This code is wrong right now. I must find a way to count how many days are left in a year since the birth date
-        #and how many days have passed since Jan 1 of the second date to its current day.
-        numberYears=0
-        if difYears>1:
-            while i!=difYears-1:
-                if isLeapYear(year1+i)==True:
-                    numberYears=numberYears+366
-                else:
-                    numberYears=numberYears+365
-                i=i+1
-            if difMonths==0:
-                return difDays + numberYears
-            else:
-                return daysBetweenMonths(month1,month2) + dif1 + numberYears
-        else:
-            if isLeapYear(year1)==True
-            
-        
-                    
-                    
+        return untilEndOfYear(year1,month1,day1)+betweenYears(year1,year2)+sinceBeginningOfYear(year2,month2,day2)                    
 
 
 # Test routine
@@ -89,5 +132,5 @@ def test():
             print "Test with data:", args, "failed"
         else:
             print "Test case passed!"
-
+            
 test()
