@@ -49,14 +49,7 @@ def betweenMonths(month1,month2):
             i=i+1
         return daysBetween
     
-#This procedure returns the number of days left in a year.
-def untilEndOfYear(year,month,day):
-    if isLeapYear(year)==True:
-        daysOfMonths[2]=29
-    else:
-        daysOfMonths[2]=28
-    daysUntilEndMonth=daysOfMonths[month]-day+1
-    return daysUntilEndMonth+betweenMonths(month,12)+daysOfMonths[12]
+
 
 ###############################################################################
 
@@ -74,8 +67,16 @@ def sinceBeginningOfYear(year,month,day):
         else:
             daysOfMonths[2]=28
         return daysOfMonths[1]+betweenMonths(1,month)+day-1
-
+        
 #Number of days until end of specified year (not inclusive):
+def untilEndOfYear(year,month,day):
+    if isLeapYear(year)==True:
+        daysOfMonths[2]=29
+    else:
+        daysOfMonths[2]=28
+    daysUntilEndMonth=daysOfMonths[month]-day+1
+    return daysUntilEndMonth+betweenMonths(month,12)+daysOfMonths[12]
+
 def betweenYears(year1,year2):
     difYears=year2-year1-1
     daysBetween=0
